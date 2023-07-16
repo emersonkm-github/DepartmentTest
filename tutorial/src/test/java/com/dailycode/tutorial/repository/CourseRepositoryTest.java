@@ -1,6 +1,7 @@
 package com.dailycode.tutorial.repository;
 
 import com.dailycode.tutorial.entity.Course;
+import com.dailycode.tutorial.entity.Student;
 import com.dailycode.tutorial.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,30 @@ class CourseRepositoryTest {
         List<Course> courses = courseRepository.findByTitleContaining("C",firstPageTenRecords).getContent();
 
         System.out.println("courses = " + courses);
+    }
+
+    @Test
+    public void saveCourseWithStudentAndTeacher(){
+
+        Teacher teacher = Teacher.builder()
+                .firstName("Pla")
+                .lastName("Ja")
+                .build();
+        Student student = Student.builder()
+                .firstName("Qlo")
+                .lastName("Vivi")
+                .emailId("vivi@gmail.com")
+                .build();
+        Course course = Course.builder()
+                .title("Java")
+                .credit(9)
+                .teacher(teacher)
+                .build();
+
+        course.addStudents(student);
+
+        courseRepository.save(course);
+
     }
 
 }
